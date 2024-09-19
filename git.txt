@@ -1,0 +1,4 @@
+sudo apt install git
+
+git config --global user.name "Sergio Chulian"
+git config --global user.email "sergio.chulian@iesdonana.org"

@@ -1,0 +1,4 @@
+Instalar PHP: sudo apt install php-cli
+Comprobar versión de PHP: php -v
+Lanzar un servidor web: php -S IP:PUERTO
+
