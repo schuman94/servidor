@@ -7,5 +7,20 @@
 </head>
 <body>
     <p>Esto es el resultado del formulario</p>
+    <?php echo 25 ?>
+    <br>
+    <?= 1+1 ?> 
+    <br>
+    <?php
+    $x = 25; // Comentario
+    $y = 30; # Comentario
+    $z = $x + $y; /* Comentario
+                     multilinea
+                  */
+
+    $x = "12" + "pepe";
+    var_dump($x);
+    ?>
+    <?= $x ?>
 </body>
 </html>

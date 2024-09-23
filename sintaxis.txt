@@ -1,0 +1,3 @@
+var_dump() Funcion que vuelca una varaible a la salida.
+intdiv($x, $y) Funcion para dividir y devolver un entero siempre.
+

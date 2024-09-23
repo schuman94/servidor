@@ -1,4 +1,26 @@
 Instalar PHP: sudo apt install php-cli
 Comprobar versión de PHP: php -v
-Lanzar un servidor web: php -S IP:PUERTO
+Lanzar un servidor web: php -S 127.0.0.1:PUERTO
+
+Instalar la extension "php intelephense" en code
+
+
+Editar archivo de configuracion en /etc/php/8.2/cli/php.ini
+
+Buscamos esta parte del archivo:
+
+display_errors = On       AQUÍ HAY QUE PONER "On"
+
+; The display of errors which occur during PHP's startup sequence are handled
+; separately from display_errors. We strongly recommend you set this to 'off'
+; for production servers to avoid leaking configuration details.
+; Default Value: On
+; Development Value: On
+; Production Value: Off
+; https://php.net/display-startup-errors
+display_startup_errors = On   AQUÍ HAY QUE PONER "On"
+
+
+; https://php.net/error-reporting
+error_reporting = E_ALL         AQUÍ HAY QUE DEJAR SOLO EL "E_ALL"
 
