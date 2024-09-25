@@ -24,3 +24,23 @@ display_startup_errors = On   AQUÍ HAY QUE PONER "On"
 ; https://php.net/error-reporting
 error_reporting = E_ALL         AQUÍ HAY QUE DEJAR SOLO EL "E_ALL"
 
+
+[Date]
+; Defines the default timezone used by the date functions
+; https://php.net/date.timezone
+date.timezone = 'UTC'         AQUÍ HAY QUE PONER 'UTC'
+
+
+
+
+
+sudo apt install php-mbstring
+
+Por defecto debian lo activa, pero se puede activar manualmente:
+Activar modulos en /etc/php/8.2/cli/conf.d creando un enlace simbolico de los archivos que se encuentran en /etc/php/8.2/mods-available/
+
+
+La funcion phpinfo() vuelca en la salida toda la informacion del php que tenemos instalado, incluida su configuración y sus modulos activos.
+
+
+

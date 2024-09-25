@@ -18,9 +18,11 @@
                      multilinea
                   */
 
-    $x = "12" + "pepe";
-    var_dump($x);
+    //$x = "12" + "pepe";
+    //var_dump($x);
     ?>
     <?= $x ?>
+
+    <?php phpinfo() ?>
 </body>
 </html>

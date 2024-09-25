@@ -1,3 +1,37 @@
 var_dump() Funcion que vuelca una varaible a la salida.
 intdiv($x, $y) Funcion para dividir y devolver un entero siempre.
 
+gettype() Funcion que devuelve una cadena con el tipo de la varaible.
+
+Existe el tipo NULL cuyo unico valor posible es null.
+
+El valor false se convierte en cadena vacia si se vuelca a la salida con un echo (conversión implicíta en string)
+El valor true se convierte en 1 si se vuelca a la salida con un echo (conversión implicíta en string)
+
+isset() Es una "funcion" que te devuelve true si la variable que le indicas existe y está asignada (es decir, que tiene un valor distinto de null). Una variable existente que vale null daria false con esta funcion.
+is_null() Es una funcion que te devuelve true o false dependiendo de si el valor de la variable es null.
+
+$x <=> $y   Este operador devuelve -1, 0 o 1 dependiendo de que si $x es menor, igual o mayor que $y
+
+
+
+
+"25" == 25   Aqui el string se convierten en int y luego se comparan y se devuelve true
+
+"250" < "27"  Si esta comparacion se hiciese entre cadenas daria false, pero php las convierte en int y luego las compara, así que da false.
+
+=== devuelve true si los valores son iguales y además del mismo tipo
+
+empty() Devuelve true si la variable es null, 0, "", "0"  Esta funcion puede causar problemas, por ejemplo en un formulario, ya que no es lo mismo dejar un campo vacio a que el usuario escriba un 0
+
+Operador fusion de null:    ??      Es el coalesce del sql, sustituye null por otro valor   $x ?? $y    devuelve $x si no es null, y $y si $x es null
+
+Operador ternario:        $a ? $b : $c     Si $a es true, entonces devuelve $b, y si $a es false, entonces devuelve $c 
+
+$a ?: $b   Operador Elvis
+
+$x[2] accedes a caracter tercero de la cadena, es una indexación. Pero cuidado porque las letras con acento y otros caracteres ocupan de 2bytes, así que esto nunca lo usaremos.
+
+Manipulacion de cadenas multibyte:
+mb_substr($x, 2, 1)
+Lo mismo pasa con el strlen y el mb_strlen
