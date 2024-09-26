@@ -23,6 +23,6 @@
     ?>
     <?= $x ?>
 
-    <?php phpinfo() ?>
+    <? // php phpinfo() ?>
 </body>
 </html>

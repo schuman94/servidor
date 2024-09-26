@@ -35,3 +35,22 @@ $x[2] accedes a caracter tercero de la cadena, es una indexación. Pero cuidado 
 Manipulacion de cadenas multibyte:
 mb_substr($x, 2, 1)
 Lo mismo pasa con el strlen y el mb_strlen
+
+Arrays numericos:
+Tradicionalmente la funcion array() crea un array con los argumentos que le metas:   $a = array('a', 'b', 'c')
+Forma más moderna:  $a = ['a', 'b', 'c']
+Añadir elemento por el final: $a[] = 'd'
+
+
+Arrays asociativos:
+$a = ['gato' => 'cat', 'perro' => 'dog']
+
+Añadir elemento:
+$a[caballo] = 'horse'
+
+Eliminar elemento:
+unset($a['perro'])
+
+
+
+
