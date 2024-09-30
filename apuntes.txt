@@ -42,7 +42,6 @@ Activar modulos en /etc/php/8.2/cli/conf.d creando un enlace simbolico de los ar
 
 La funcion phpinfo() vuelca en la salida toda la informacion del php que tenemos instalado, incluida su configuración y sus modulos activos.
 
-Las comillas dobles pueden encerrar dentro una variable ($x) y la detecta. Las comillas simples no.
 
 
 
