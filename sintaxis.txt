@@ -1,3 +1,5 @@
+Las comillas dobles pueden encerrar dentro una variable ($x) y la detecta. Las comillas simples no.
+
 var_dump() Funcion que vuelca una varaible a la salida.
 intdiv($x, $y) Funcion para dividir y devolver un entero siempre.
 
@@ -23,6 +25,7 @@ $x <=> $y   Este operador devuelve -1, 0 o 1 dependiendo de que si $x es menor, 
 === devuelve true si los valores son iguales y además del mismo tipo
 
 empty() Devuelve true si la variable es null, 0, "", "0"  Esta funcion puede causar problemas, por ejemplo en un formulario, ya que no es lo mismo dejar un campo vacio a que el usuario escriba un 0
+Cuidado con la funcion empty porque si contiene un 0, tambien la da por vacia.
 
 Operador fusion de null:    ??      Es el coalesce del sql, sustituye null por otro valor   $x ?? $y    devuelve $x si no es null, y $y si $x es null
 
@@ -51,6 +54,19 @@ $a[caballo] = 'horse'
 Eliminar elemento:
 unset($a['perro'])
 
+in_array($x, $y)  La funcion busca el valor $x en el array $y.
+
+count() La funcion cuenta el numero de elementos que contiene el array
+
+foreach ($array as $key => $value) {}
+foreach ($array as $value) {}     Indicar $key es opcional
+
+Sintaxis alternativa:
+foreach ():
+    ...
+endforeach;
+
+Si una variable de fuera de una funcion la declaras como global dentro de la propia funcion (global $x;), puedes usarla dentro de dicha funcion sin necesidad de pasarsela como argumento.
 
 
 
