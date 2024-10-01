@@ -68,5 +68,18 @@ endforeach;
 
 Si una variable de fuera de una funcion la declaras como global dentro de la propia funcion (global $x;), puedes usarla dentro de dicha funcion sin necesidad de pasarsela como argumento.
 
+require 'auxiliar.php';  Este comando importa el contenido del archivo auxiliar.php al archivo actual (que se encuentra en el mismo directorio), es decir, sirve para importar funciones, objetos, variables...
 
 
+Si pasas un array como parámetro a una función, en realidad solo le estás pasando una copia del array, por lo que la función no puede modificar el original.
+Para pasar el array como referencia en una funcion se debe escribir &$array, de este modo, la función puede modificar el array original.
+
+Lo mismo ocurre con las asignaciones...
+
+Si hago esto: $y = $x      =>  En $y se crea una variable que contiene una copia del array $x. Es decir, son arrays diferentes.
+
+Si hago esto: $y =& $x     =>  $y contiene la variable que apunta al mismo valor que $x (es decir, es la misma variable que $x). Es decir que si luego igualas $y a otra cosa, $x también contiene esa otra cosa. Son la misma variable.
+                               Dicho de otra forma $x y $y son dos nombres que puede usarse por igual para hacer referencia a la unica variable que existe.
+
+ 
+<?php declare(strict_types=1) ?>  Si añades esta linea al principio del archivo, haces que el codigo de php se vuelva estricto con los tipos de variables.
