@@ -83,3 +83,7 @@ Si hago esto: $y =& $x     =>  $y contiene la variable que apunta al mismo valor
 
  
 <?php declare(strict_types=1) ?>  Si añades esta linea al principio del archivo, haces que el codigo de php se vuelva estricto con los tipos de variables.
+
+
+unset()  elimina una variable, array, objeto, propiedad, etc
+
