@@ -87,3 +87,48 @@ Si hago esto: $y =& $x     =>  $y contiene la variable que apunta al mismo valor
 
 unset()  elimina una variable, array, objeto, propiedad, etc
 
+
+
+OBJETOS
+En el caso de los objetos  no funciona igual que los arrays, cuando igualas una variable (identificador) a otra que contiene un objeto, la nueva variable (identificador) tambien apunta a ese objeto.
+$x       --->       [.]         ---->   [valor]
+identificador      Variable             valor, objeto, array...
+
+
+Pero si haces $x =& $y    entonces  $x apunta a la misma variable que $y, es decir, comparten variable, es la misma y se accede desde cualquiera de los dos identificadores.
+
+Cuando comparamos...
+
+$x == $y  devuelve True si son instancias de la misma clase y sus propiedades tienen los mismos valores  (igualdad)
+$x === $y devuelve True si apuntan al mismo objeto, es decir, comparan la referencia. (identidad)
+
+Operador de resolucion de ambito '::'
+Sirve para obtener el valor de una constante. Hay que poner el nombre de una clase, dos puntos y el nombre de la constante. Ejemplo:  DateTime::ATOM
+
+Para acceder a propiedades de la instancia de una clase, es decir, propiedades de un objeto, se utiliza el operador '->'
+
+Para crear constantes se usa el ' define': define('nombreconstante', valor)
+
+Para crear una instancia de una clase se usa el 'new'
+
+
+
+Las constantes no llevan el $ y van en mayusculas por regla de estilo (pero no hablo de una constante de una clase, sino una constante en tu codigo)
+
+
+define('FORMATO_ISO', 'Y-m-d H:i:s.u');
+define('FORMATO_USUARIO', 'd-m-y H:i:s');
+
+function  fecha_a_usuario(DateTime $d): string
+{
+    $madrid = new DateTimeZone("Europe/Madrid");
+    return (new DateTimeInmutable($d->format(FORMATO_ISO), $madrid))->format(FORMATO_USUARIO);
+}
+
+Intervalos
+
+new DateInterval("P4Y3M2D")  me devuelve un intervalo de 4 años, 3 meses y 2 dias
+
+
+
+
