@@ -130,5 +130,12 @@ Intervalos
 new DateInterval("P4Y3M2D")  me devuelve un intervalo de 4 años, 3 meses y 2 dias
 
 
+Cuando tenemos que recorrer una cadena y hacer comprobaciones en la propia cadena, tenemos una funcion que no tiene un coste lineal.
+Por lo tanto, puede ser util crear un array indexado, donde los caracteres de la cadena sean las claves, no los valores.
+De esta forma se puede comprobar casi inmediatamente si ese caracter está, sin tener que recorrer todo el array, ya que es acceso automatico.
+Realmente es casi como si hubiesemos construido un conjunto de python.
 
+
+A una funcion si le pasas un parametro con un valor primitivo (incluido arrays) se pasa una copia, sin embargo...
+si le pasas un objeto, le estás pasando la referencia al objeto, por lo que la función puede modificar ese objeto concreto y no una copia.
 

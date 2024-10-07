@@ -44,4 +44,6 @@ La funcion phpinfo() vuelca en la salida toda la informacion del php que tenemos
 
 
 
+sudo apt install postgresql postgresql-client
+
 
