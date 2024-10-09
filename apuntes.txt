@@ -51,13 +51,13 @@ comprobar que el postgresql está activo: sudo systemctl status postgresql
 
 
 crear usuario: sudo -u postgres createuser -P datos
-crear base de datos: sudo -u createdb -O datos datos
+crear base de datos: sudo -u postgres createdb -O datos datos
 Entrar en la base de datos con el cliente: psql -h localhost -U datos -d datos
 
 Inyección de código sql:
 psql -h localhost -U datos -d datos < datos.sql  (Podemos incluir esto en un script sh)
 
-Para tener el PDO: sudo apt install php-postgresql  
+Para tener el PDO: sudo apt install php-pgsql  
 
 Configurar postgres: sudo nano /etc/postgresql/15/main/postgresql.conf
 
