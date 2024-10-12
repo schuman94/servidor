@@ -43,9 +43,6 @@ Activar modulos en /etc/php/8.2/cli/conf.d creando un enlace simbolico de los ar
 La funcion phpinfo() vuelca en la salida toda la informacion del php que tenemos instalado, incluida su configuración y sus modulos activos.
 
 
-***
-
-
 sudo apt install postgresql postgresql-client
 comprobar que el postgresql está activo: sudo systemctl status postgresql
 
@@ -57,7 +54,7 @@ Entrar en la base de datos con el cliente: psql -h localhost -U datos -d datos
 Inyección de código sql:
 psql -h localhost -U datos -d datos < datos.sql  (Podemos incluir esto en un script sh)
 
-Para tener el PDO: sudo apt install php-pgsql  
+Para tener el PDO: sudo apt install php-pgsql
 
 Configurar postgres: sudo nano /etc/postgresql/15/main/postgresql.conf
 
@@ -72,14 +69,4 @@ timezone = 'UTC'
 Hay que reiniciar el postgres cuando se hacen cambios en la configuracion: sudo systemctl restart postgresql
 
 
-
-
-
-
-
-
-
-
-
-
-
+***
