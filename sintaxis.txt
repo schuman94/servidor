@@ -107,7 +107,7 @@ Sirve para obtener el valor de una constante. Hay que poner el nombre de una cla
 
 Para acceder a propiedades de la instancia de una clase, es decir, propiedades de un objeto, se utiliza el operador '->'
 
-Para crear constantes se usa el ' define': define('nombreconstante', valor)
+Para crear constantes se usa el ' define': define('nombreconstante', valor)   También está la opción: const nombreconstante = valor;
 
 Para crear una instancia de una clase se usa el 'new'
 
@@ -138,4 +138,9 @@ Realmente es casi como si hubiesemos construido un conjunto de python.
 
 A una funcion si le pasas un parametro con un valor primitivo (incluido arrays) se pasa una copia, sin embargo...
 si le pasas un objeto, le estás pasando la referencia al objeto, por lo que la función puede modificar ese objeto concreto y no una copia.
+
+El fecthColumn recoge el valor de la columna directamente en vez de recoger toda la fila.
+Es util para consultas que sabes que devuelven una unica fila y columna, es decir, un valor (como el count)
+Pero recuerda que a las select con funciones de agregacion no se le puede poner el FOR UPDATE.
+
 
