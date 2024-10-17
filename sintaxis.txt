@@ -144,3 +144,22 @@ Es util para consultas que sabes que devuelven una unica fila y columna, es deci
 Pero recuerda que a las select con funciones de agregacion no se le puede poner el FOR UPDATE.
 
 
+Funciones de Expresiones regulares:
+preg_match('/expresion_regular/', 'cadena', $array_matches) 
+El array de matches se rellena con la cadena como primer elemento y como segundo elemento el primer grupo de captura, 
+es decir, el primer paréntesis que hayas puesto dentro de la expresión. Y tendrá más si has puesto más grupos de captura.
+
+
+Una funcion para comprobar que todos los caracteres de una cadena son digitos: ctype_digit()
+Es útil para la comprobación del id de una tabla, ya que no sirve solo con is_numeric()
+
+La función extract($array) te crea tantas variables como elementos tenga el array asociatvo, en donde el nombre de la variable es la key del elemento y el valor es el value.
+Pero cuidado que puede haber un elemento del que no querias que se creara una variable. Y cuidado que puede machacar una variable que ya existia con ese mismo nombre.
+Muy posiblemente tengamos problemas con el id, ya que puede machacar otro id que ya teniamos pillado por get.
+
+
+
+
+
+
+
