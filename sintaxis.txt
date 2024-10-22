@@ -157,7 +157,8 @@ La función extract($array) te crea tantas variables como elementos tenga el arr
 Pero cuidado que puede haber un elemento del que no querias que se creara una variable. Y cuidado que puede machacar una variable que ya existia con ese mismo nombre.
 Muy posiblemente tengamos problemas con el id, ya que puede machacar otro id que ya teniamos pillado por get.
 
-
+En la expansion de variable en las cadenas con comillas dobles, si quisiese expandir una variable que es un elemento de un array, por ejemplo: "$departamento['id]"
+Necesitamos poner llaves a toda la variable, si no, se creeria que la variable es solo $departamento, sin el ['id']. Por lo tanto, seria así "{$departamento['id']}"
 
 
 
