@@ -70,3 +70,11 @@ Hay que reiniciar el postgres cuando se hacen cambios en la configuracion: sudo 
 
 
 ***
+
+Instalar la extension pgcrypto en template1 para que siempre que creemos una base de datos nueva tenga esa extensión:
+sudo -u postgres psql -d template1
+create extension pgcrypto;
+
+Tambien puedes hacerlo en tu base de datos si ya la tenias de antes.
+
+
