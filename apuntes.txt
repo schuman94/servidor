@@ -78,3 +78,8 @@ create extension pgcrypto;
 Tambien puedes hacerlo en tu base de datos si ya la tenias de antes.
 
 
+Amenazas de seguridad:
+-Inyección de codigo (sql): Filtrar la entrada
+-Cross-site scripting (inyeccion de codigo javascript): Necesitamos escapar la salida.
+-CSRF (te pueden robar tu phpssid para utilizar tu sesion): Tenemos que generar y comprobar siempre el token _csrf
+
