@@ -83,3 +83,38 @@ Amenazas de seguridad:
 -Cross-site scripting (inyeccion de codigo javascript): Necesitamos escapar la salida.
 -CSRF (te pueden robar tu phpssid para utilizar tu sesion): Tenemos que generar y comprobar siempre el token _csrf
 
+Instalar npm: sudo apt install npm
+Si no deja, entonces: sudo rm /var/lib/apt/lists/*_*
+                      sudo apt update
+                      sudo apt install npm
+
+Instalar tailwind: 
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+
+Configurar el fichero tailwind.config.js
+Crear el input.css
+
+Configurar el fichero package.json
+
+En una terminal aparte puedes ejecutar "npm run watch" para vigilar los cambios en los archivos del "content" del tailwind.config.js y así se actualiza automaticamente el output.css.
+el output.css es el que enlazas en tu html para meterle el estilo.
+<link rel="stylesheet" href=output.css>
+
+Recomendable instalar la extension Inline fold de un tal Mohamed
+
+Hay que crear un .gitignore para incluir nodemodules
+
+
+php -S 127.0.0.1:8000 -t public   (Con este comando lanzamos el servidor indicando que el document root es la carpeta public)
+
+Instalar el flowbite:
+npm install flowbite   (en la carpeta raiz del proyecto)
+Seguimos instrucciones de https://flowbite.com/docs/getting-started/quickstart/
+
+
+Dentro de la carpeta js que está en public, creamos un enlace simbolico a la  carpeta dist que está en el node_modules/flowbite  (esto se debe a que el html no puede acceder fuera)
+Dentro de la carpeta js: ln -s ../../node_modules/flowbite/dist flowbite
+
+Ahora podemos incluir el enlace en el html: <script src="/js/flowbite/flowbite.js"></script>
+
