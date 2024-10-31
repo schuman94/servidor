@@ -88,7 +88,7 @@ Si no deja, entonces: sudo rm /var/lib/apt/lists/*_*
                       sudo apt update
                       sudo apt install npm
 
-Instalar tailwind: 
+Instalar tailwind: (esto hay que hacerlo en cada proyecto)
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init
 
@@ -104,7 +104,9 @@ el output.css es el que enlazas en tu html para meterle el estilo.
 Recomendable instalar la extension Inline fold de un tal Mohamed
 
 Hay que crear un .gitignore para incluir nodemodules
+Y recuerda que entonces si te vuelves a traer desde github el proyecto, tendras que generar el nodemodules con npm install -D tailwindcss postcss autoprefixer
 
+Comando para que se genere o modifique el output.css automaticamente con cada cambio que hagas: npm run watch (hay que dejarlo en una terminal aparte)
 
 php -S 127.0.0.1:8000 -t public   (Con este comando lanzamos el servidor indicando que el document root es la carpeta public)
 
