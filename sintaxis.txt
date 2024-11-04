@@ -160,7 +160,6 @@ Muy posiblemente tengamos problemas con el id, ya que puede machacar otro id que
 En la expansion de variable en las cadenas con comillas dobles, si quisiese expandir una variable que es un elemento de un array, por ejemplo: "$departamento['id]"
 Necesitamos poner llaves a toda la variable, si no, se creeria que la variable es solo $departamento, sin el ['id']. Por lo tanto, seria así "{$departamento['id']}"
 
+Para acceder a una propiedad o metodo estatico de una clase se utiliza el doble dos puntos. Por ejemplo Usuario::por_username()
 
-
-
-
+Una funcion estatica de una clase que devuelve una instancia de dicha clase, para indicar el tipo del retorno se usa static, de esa forma no tenemos que poner el nombre de la clase (por si algun dia cambiamos el nombre y no tenemos que ir cambiandolo en todos los sitios.)
