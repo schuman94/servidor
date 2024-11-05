@@ -120,3 +120,4 @@ Dentro de la carpeta js: ln -s ../../node_modules/flowbite/dist flowbite
 
 Ahora podemos incluir el enlace en el html: <script src="/js/flowbite/flowbite.js"></script>
 
+

@@ -162,4 +162,11 @@ Necesitamos poner llaves a toda la variable, si no, se creeria que la variable e
 
 Para acceder a una propiedad o metodo estatico de una clase se utiliza el doble dos puntos. Por ejemplo Usuario::por_username()
 
-Una funcion estatica de una clase que devuelve una instancia de dicha clase, para indicar el tipo del retorno se usa static, de esa forma no tenemos que poner el nombre de la clase (por si algun dia cambiamos el nombre y no tenemos que ir cambiandolo en todos los sitios.)
+Una funcion estatica de una clase que devuelve una instancia de dicha clase, para indicar el tipo del retorno se usa static, de esa forma no tenemos que poner el 
+nombre de la clase (por si algun dia cambiamos el nombre y no tenemos que ir cambiandolo en todos los sitios.) Antiguamente se usaba la palabra self, pero 
+con el self no se produce el enlace estatico en tiempo de ejecución, es decir, el static permite que una clase hija de otra que tiene un static pueda hacer referencia a ella (hija)
+en vez de a la superior. Con el self estaría haciendo referencia a la clase exacta en la que está escrito el self, pero con el static se comprueba exactamente que clase es
+la que está haciendo uso de ese metodo que lleva un static (no confundir con la palabra static para indicar metodos estaticos.). Conclusión, usar siempre static y nunca self.
+
+El modificador protected hace que esa funcion o variable con protected solo se pueda ver dentro de la jerarquia de la clase, es decir, la pueden ver los hijos.
+
