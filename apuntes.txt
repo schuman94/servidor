@@ -121,3 +121,48 @@ Dentro de la carpeta js: ln -s ../../node_modules/flowbite/dist flowbite
 Ahora podemos incluir el enlace en el html: <script src="/js/flowbite/flowbite.js"></script>
 
 
+
+Obtener composer:
+sudo apt install composer
+
+Antes de instalar el mpdf nos hace falta un paquete de php:
+sudo apt install php-gd
+
+
+En la carpeta principal del proyecto podemos instalar paquetes con composer:
+composer require mpdf/mpdf
+
+Metemos la carpeta vendor en el .gitignore al igual que el node_modules
+
+
+Si quiero un paquete de composer solo para desarrollo: composer require nombrepaquete --dev
+
+Restaurar la carpeta vendor: composer install
+
+
+
+Autoloader:
+
+En el codigo hay que poner un:
+require 'vendor/autoload.php';
+
+
+Para que el autoloader busque en la carpeta src cuando en el espacio de nombre hay un App. En el composer.json hay que incluir esto:
+ "autoload": {
+        "psr-4": {"App\\": "src/"}
+    }
+
+Ejecutar esto:
+composer dump autoload
+
+Ahora cuando se use una clase de otro fichero, el autoloader lo carga, 
+aunque se debe indicar el nombre totalmente cualificado y si no, el autoloader te lo indica dandole a control + espacio + intro, haciendo que se ponga arriba con un "use".
+
+
+Aunque si queremos que se cargue no una clase, sino un archivo que contiene funciones (como el auxiliar php), 
+entonces lo que hay que hacer es poner en el autoload del composer.json mas cosas:
+
+MIRALO EN EL GIT DE RICARDO QUE NO ME HA DADO TIEMPO A VERLO 
+
+
+Asi ya no tenemos que hacer un require auxiliar.php
