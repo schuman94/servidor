@@ -139,12 +139,15 @@ Si quiero un paquete de composer solo para desarrollo: composer require nombrepa
 
 Restaurar la carpeta vendor: composer install
 
-
-
 Autoloader:
 
+En el psy shell escribir:
+include 'vendor/autoload.php';
+
+
+
 En el codigo hay que poner un:
-require 'vendor/autoload.php';
+require 'vendor/autoload.php'; (hay que indicar la ruta bien)
 
 
 Para que el autoloader busque en la carpeta src cuando en el espacio de nombre hay un App. En el composer.json hay que incluir esto:
@@ -162,7 +165,26 @@ aunque se debe indicar el nombre totalmente cualificado y si no, el autoloader t
 Aunque si queremos que se cargue no una clase, sino un archivo que contiene funciones (como el auxiliar php), 
 entonces lo que hay que hacer es poner en el autoload del composer.json mas cosas:
 
-MIRALO EN EL GIT DE RICARDO QUE NO ME HA DADO TIEMPO A VERLO 
+{
+    "require": {
+        "mpdf/mpdf": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {"App\\": "src/"},
+        "files": ["src/auxiliar.php"]
+    }
+}
 
 
 Asi ya no tenemos que hacer un require auxiliar.php
+
+
+Cada vez que toquemos ese archivo hay que hacer el composer dump autoload
+
+
+Despues de instalar un paquete con composer, es necesario realizar con el psy shell el include 'vendor/autoload.php'
+
+
+El paquete doctrine/inflector es bastante util, tiene funciones tipicas para manipulacion de cadenas como eliminar acentos, transformar en plural, etc.
+
+

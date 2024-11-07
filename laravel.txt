@@ -1,0 +1,22 @@
+Antes de instalar laravel: sudo apt install php-xml php-sqlite3
+
+
+Instalar laravel:
+composer create-project laravel/laravel nombreProyecto
+
+
+Dentro del proyecto: npm install
+
+
+Luego:
+git init
+git add .
+git commit -m "Carga inicial"
+gh repo create
+
+(Recuerda marcar: push and existing local to github)
+
+
+Arrancar el servidor: php artisan serve
+
+
