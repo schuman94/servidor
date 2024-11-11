@@ -1,14 +1,22 @@
+Ctrl + p   es el buscador de archivos de code 
+
+
 Antes de instalar laravel: sudo apt install php-xml php-sqlite3
 
 
 Instalar laravel:
 composer create-project laravel/laravel nombreProyecto
 
+Arrancar el servidor: php artisan serve
 
 Dentro del proyecto: npm install
+npm run build  (construye los assets adecuados)
 
+El comando "composer run dev" es la combinacion del "php artisan serve" + "npm run dev" 
 
-Luego:
+php artisan tinker es el psyshell que tiene laravel
+
+Para crear el repositorio:
 git init
 git add .
 git commit -m "Carga inicial"
@@ -16,7 +24,65 @@ gh repo create
 
 (Recuerda marcar: push and existing local to github)
 
+Instalar la extension de code: laravel extension pack
 
-Arrancar el servidor: php artisan serve
+Primer archivo importante: /routes/web.php
+(rutas que la aplicacion web entiende. Una ruta es una url que la aplicacion es capaz de atender.)
 
 
+Puedes ir a las diferentes views pulsando ctrl + click en el nombre de la vista.
+
+el comando: php artisan route:list   nos devuelve un listado de todas nuestras rutas
+
+En /public/index.php es el front controller
+
+
+En  /config/app.php estan los parametros de configuracion.  Aqui se cargan variables de entorno y en caso de no existir le dan un valor por defecto. Las variables de entorno se crean en:
+
+El archivo /.env contiene las variables de entorno
+Aqui hay que cambiar la base de datos para usar el postgresql
+
+
+El archivo /config/database.php es la configuracion de la base de datos. Normalmente no la tocamos.
+
+Las migraciones se encuentran en /database/migrations
+
+
+
+
+Crear el usuario de la base de datos:
+sudo -u postgres createuser -P agitame
+
+Crear la base de datos:
+sudo -u postgres createdb -O agitame agitame
+
+
+Ahora modificamos en el .env:
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=agitame
+DB_PASSWORD=agitame
+DB_USERNAME=agitame
+
+
+
+Ahora hago:
+php artisan migrate:status  y me dirá que migration table not found. Es normal, nunca se han creado.
+php artisan migrate     esto me crea la tabla de migraciones y aplica todas las migraciones
+
+Comando para abrir la consola de la base de datos con el php artisan:
+php artisan db 
+
+
+
+
+
+
+Instalacion del breeze:
+
+composer require laravel/breeze --dev
+php artisan breeze:install
+php artisan migrate
+npm install
+npm run dev
