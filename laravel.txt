@@ -86,3 +86,29 @@ php artisan breeze:install
 php artisan migrate
 npm install
 npm run dev
+
+
+
+
+Los facades (fachadas) son clases que solo tienen métodos estaticos.
+
+
+Asi programaríamos:
+En web.php creamos una nueva ruta para departamentos
+Luego en resources/view nos creamos una carpeta, por ejemplo, departamentos, y dentro de ella podemos crearnos una vista llamada index.blade.php
+Dentro de index.blade.php lo que escribiriamos seria codigo de frontend dentro de un <x-app-layout> por ejemplo.
+Luego creariamos  una migracion para incluir la tabla departamentos
+
+
+Ejecutamos un: php artisan make:migration create_departamentos_table
+
+y ahora nos vamos a la migracion que se ha creado en: /database/migrations/2024_11_13_201723_create_departamentos_table.php
+
+Aqui añadimos las columnas de departamento.
+
+Luego ejecutamos un: php artisan migrate
+Y ya se corre la migracion para crear la tabla en la base de datos. 
+
+
+
+
