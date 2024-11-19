@@ -111,4 +111,66 @@ Y ya se corre la migracion para crear la tabla en la base de datos.
 
 
 
+AQUI VA LO DEL OTRO PC
+php artisan db => abre una consola con el postgres
+
+instalar el flowbite en laravel (primero instala tailwind)
+https://flowbite.com/docs/getting.started/laravel/
+npm install -D flowbite
+
+Modificar el tailwind.config.js, quedaria asi:
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/**/*.blade.php',
+        './resources/**/*.js',
+        './resources/**/*.vue',
+        './node_modules/flowbite/**/*.js'
+    ],
+
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            },
+        },
+    },
+
+    plugins: [
+        forms,
+        require('flowbite/plugin')
+    ],
+};
+
+
+En el archivo ./resources/js/app.js hay que añadir: import 'flowbite';
+
+Por si acaso, cerrar el composer run dev y volverlo a arrancar.
+
+
+
+
+Para crear modelo: php artisan make:model -cfs departamento-cfs crea el controlador, la factoria y la semilla
+
+Con eloquent tenemos objetos a los que se les puede aplicar metodos como all, find (busca por id) el save (update o insert)
+
+_________________________________________________________________________________.
+Cuando me clono de 0 un repositorio tengo que hacer esto:                        |
+composer install                                                                 |
+npm install                                                                      | 
+cambiar o crear el .env                                                          | 
+php artisan migrate   (puedes asegurarte poniendo un php artisan migrate:fresh   |
+                       para limpiar todo antes en la base de datos)              |
+_________________________________________________________________________________|
+
+
+
+El laravel sabe que si mandas un objeto modelo que lleva un id, lee directamente el id del objeto, no hace falta poner $departamento->id vale con $departamento
+
+la funcion dd() es un dump y un die
 
