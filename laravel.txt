@@ -166,6 +166,8 @@ npm install                                                                     
 cambiar o crear el .env                                                          | 
 php artisan migrate   (puedes asegurarte poniendo un php artisan migrate:fresh   |
                        para limpiar todo antes en la base de datos)              |
+php artisan key:generate                                                         |
+composer run dev (para arrancar el servidor tras todos los cambios)              |
 _________________________________________________________________________________|
 
 
@@ -174,3 +176,78 @@ El laravel sabe que si mandas un objeto modelo que lleva un id, lee directamente
 
 la funcion dd() es un dump y un die
 
+
+
+
+
+Empezando a programar en laravel
+
+Crear modelo desde la consola: php artisan make:model -cmrfs Empleado
+
+Creamos la migracion  en el archivo correspondiente:
+public function up(): void
+{
+	Schema::create('empleados', function (Blueprint $table) {
+		$table->id();
+		$table->decimal('numero', 4, 0)->unique();
+		$table->foreignId('departamento_id)->constrained();  (poniendo constrained, ya laravel sabe todo, sabe a quien hace referencia esa columna)
+		$table->index('departamento_id');  (Esto se hace para crear un indice en la columna departamento_id, así se busca más rapido, ya que un select * from empleado where departamento_id = X; es algo muy comun)
+	}
+}
+
+Ejecutamos la migracion: php artisan migrate
+
+Luego se rellenaria la tabla con filas
+
+Ahora creamos una ruta. Tiene que haber un EmpleadoController porque antes le dije que lo cree. Nos vamos a routes/web.php y añadimos la nueva ruta:
+Route::resource('empleados', EmpleadoController::class);
+
+En EmpleadoController.php añadimos:
+ public function index() {
+	return view('empleados.index', [
+		dfgaasdf
+	])
+ }
+
+
+Ahora en el index.blade.php de empleado rellenamos todo.
+
+
+Ahora tenemos que tocar la clase Empleado:
+
+Y creamos las funciones (metodos) correspondientes que relacionen modelos (tablas). Luego recuerda que automaticamente se crea una propiedad que se llama igual pero sin los parentesis () y que devuelve un objeto o una coleccion
+Si en vez de la propiedad usamos el metodo, devuelve un querybuilder al que puedes continuar con un where() o lo que sea.
+
+
+public function departamento() {
+	return $this->belongsTo(Departamento::class); 
+}
+
+
+
+
+Reglas en las relaciones.
+En las relaciones 1 a 1, y 1 a muchos, el belongsTo hay que ponerselo al que tenga la clave ajena.
+
+
+Herramienta para depuracion (eficiencia de peticiones y respuestas)
+composer require itsgoingd/clockwork
+instalar la extension de clockwork del google chrome desde la web underground.works/clockwork
+Gracias a esto podemos observar las consultas a la base de datos que se realizan con la peticion-respuesta
+
+
+Resolver el problema del n+1: usando el with  (carga ansiosa, es decir eager loading en vez de lazy loading)
+Empleado::with('departamento')->get()
+
+
+
+
+El $request->validate hace una marcha atrás si hay algun fallo al validar. Regresa al formulario y muestra los errores.
+
+Asignacion masiva de todos los atributos de un objeto:
+$departamento->fill($validate)
+
+$validate es un array donde las claves y valor son los atributos que tiene el objeto departamento
+
+Hay que tener en cuenta que hay atributos que no se deben rellenar con la asignación masiva y otros si.
+Para que un atributo sea fillable, hay que indicarlo en el codigo del modelo (de la clase)
