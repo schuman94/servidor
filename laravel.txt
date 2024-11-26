@@ -251,3 +251,50 @@ $validate es un array donde las claves y valor son los atributos que tiene el ob
 
 Hay que tener en cuenta que hay atributos que no se deben rellenar con la asignación masiva y otros si.
 Para que un atributo sea fillable, hay que indicarlo en el codigo del modelo (de la clase)
+
+
+Relaciones muchos a muchos, requieren de una tabla intermedia (tabla pivote). La tabla por  convenio se llama como las dos tablas ordenadas alfabeticamente y con un _ en medio.
+
+Departamento            articulo_departamento            Articulo
+
+
+Las columnas de la tabla pivote son las claves primarias de las otras dos tablas. La clave primaria de la tabla intermedia es la union de las dos columnas.
+departamento_id y articulo_id
+
+
+
+Vamos a crear primero el articulo:
+php artisan make:model -cmrfs Articulo 
+
+Va a tener una columna "precio" de tipo decimal (no numeric)
+
+
+Ahora creamos la relacion:
+php artisan make:migration create_articulo_departamento_table  (si nos fijamos he hecho un make:migration en vez de make:model, porque ahora solo se crea la migracion, no hay modelo)
+
+Ahora dentro de la migración modificamos el schema::create, tenemos que meterle:
+$table->foreignId('departamento_id)->constrained();
+$table->foreignId('articulo_id)->constrained();
+$table->promary(['departamento_id', 'articulo_id']);
+
+Tal como está escrito, tenemos ya un indice creado para buscar por departamento_id, también para buscar por departamento_id y luego por articulo_id.
+Pero no tenemos indice para buscar directamente por articulo_id, asi que podriamos crearlo. Aunque por ahora no lo vamos a hacer.
+
+Ahora nos vamos al modelo Departamento y en la funcion articulos() hacemos un return $this->belongsToMany(Articulo:class);
+
+Ahora nos vamos al modelo Articulo y en la funcion departamentos() hacemos un return $this->belongsToMany(Departamento:class);
+
+
+Si a un departamento concreto (inf) quieres asociarle un articulo (tuerca):
+$inf->articulos()->attach($tuerca)
+Esto lo que hace es que en la tabla pivote se  crea una fila que asocia ambos id
+El attach permite meterle un array de ids si quieres insertarle varios. Tambien está el detach
+
+
+
+(Recordatorio de que el map puede ser util en algunas ocasiones cuando trabajemos con arrays)
+$inf->articulos->map(function ($x) {return $x->id; })->all()
+
+
+
+
