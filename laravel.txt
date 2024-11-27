@@ -93,7 +93,7 @@ npm run dev
 Los facades (fachadas) son clases que solo tienen métodos estaticos.
 
 
-Asi programaríamos:
+Asi programaríamos: (en verdad no, es mejor empezar creando el modelo e indicandole que te cree un controlador y mas cosas)
 En web.php creamos una nueva ruta para departamentos
 Luego en resources/view nos creamos una carpeta, por ejemplo, departamentos, y dentro de ella podemos crearnos una vista llamada index.blade.php
 Dentro de index.blade.php lo que escribiriamos seria codigo de frontend dentro de un <x-app-layout> por ejemplo.
@@ -184,7 +184,7 @@ Empezando a programar en laravel
 
 Crear modelo desde la consola: php artisan make:model -cmrfs Empleado
 
-Creamos la migracion  en el archivo correspondiente:
+Creamos la migracion  en el archivo correspondiente en database/migrations:
 public function up(): void
 {
 	Schema::create('empleados', function (Blueprint $table) {
@@ -209,7 +209,7 @@ En EmpleadoController.php añadimos:
 	])
  }
 
-
+Ahora en views tenemos que crear una carpeta que se llame empleados y dentro de ella un index.blade.php
 Ahora en el index.blade.php de empleado rellenamos todo.
 
 
@@ -296,5 +296,42 @@ El attach permite meterle un array de ids si quieres insertarle varios. Tambien 
 $inf->articulos->map(function ($x) {return $x->id; })->all()
 
 
+
+
+Con respecto al tema de las vistas
+
+Tenemos estas dos cosas:
+<x-app-layout>
+<x-slot name="header">
+
+
+Por ejemplo en las vistas de los departamentos:
+En resources/views/departamentos/index.blade.php vemos que todo el codigo está dentro de un:
+<x-app-layout>
+    //
+</x-app-layout>
+
+Todo eso de ahi dentro es lo que el archivo resources/views/layouts/app.blade.php recibe dentro de:
+<main>
+    {{ $slot }}
+</main>
+
+x-app-layout va asociado con layouts/app.blade.php
+
+Parece que lo que siempre se renderiza es el app.blade.php metiendole el contenido de nuestro otro archivo en el slot
+
+
+Esto por ahora no va a ocurrir, pero si alguna vez se renderizase un archivo llamado layouts/pepe.blade.php 
+Yo podria tener un archivo en donde tenga todo dentro de un x-pepe-layout 
+Y todo eso iria al {{ $slot }} de otro archivo layouts/pepe.blade.php que he creado
+
+
+
+En resources/views/layouts/app.blade.php hay en alguna parte del codigo un {{ $header}}
+Eso significa que ahí aparecerá el mismo contenido que se encuentra en el archivo resources/views/departamentos/index.blade.php dentro de:
+<x-slot name="header">
+    //        
+</x-slot>
+Esto ocurre porque le hemos puesto un name="header"
 
 
