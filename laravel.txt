@@ -335,3 +335,4 @@ Eso significa que ahí aparecerá el mismo contenido que se encuentra en el arch
 Esto ocurre porque le hemos puesto un name="header"
 
 
+En layouts tenemos tambien el guest, no solo el app. En el guest (<x-guest-layout> en guest.blade.php) no se necesita logearse.
