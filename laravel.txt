@@ -336,3 +336,14 @@ Esto ocurre porque le hemos puesto un name="header"
 
 
 En layouts tenemos tambien el guest, no solo el app. En el guest (<x-guest-layout> en guest.blade.php) no se necesita logearse.
+
+
+
+Creacion de un carrito:
+Para laravel, los modelos son modelos de eloquent (van asociados a una tabla). El carrito va a ser una clase que no está asociado a una tabla,
+por lo que no lo vamos a guardar en app/Models, sino que creamos la carpeta app/Generico y ahi dentro metemos el Carrito.php
+
+Con lineas hacemos lo mismo.
+
+funcion util: count() para saber cuantos elementos tiene un array
+
