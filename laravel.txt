@@ -275,7 +275,7 @@ php artisan make:migration create_articulo_departamento_table  (si nos fijamos h
 Ahora dentro de la migración modificamos el schema::create, tenemos que meterle:
 $table->foreignId('departamento_id)->constrained();
 $table->foreignId('articulo_id)->constrained();
-$table->promary(['departamento_id', 'articulo_id']);
+$table->primary(['departamento_id', 'articulo_id']);
 
 Tal como está escrito, tenemos ya un indice creado para buscar por departamento_id, también para buscar por departamento_id y luego por articulo_id.
 Pero no tenemos indice para buscar directamente por articulo_id, asi que podriamos crearlo. Aunque por ahora no lo vamos a hacer.

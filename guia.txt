@@ -1,0 +1,184 @@
+GUIA PARA UTILIZAR LARAVEL DESDE CERO
+
+PREPARACIÓN DEL ENTORNO DE TRABAJO
+
+Para crear un proyecto con laravel:
+composer create-project laravel/laravel nombreProyecto
+
+Luego nos vamos dentro de la carpeta creada e instalamos npm:
+npm install
+npm run build
+
+Crear el repositorio:
+git init
+git add .
+git commit -m "Carga inicial"
+gh repo create
+
+Crear el usuario de la base de datos:
+sudo -u postgres createuser -P nombreProyecto
+
+Crear la base de datos:
+sudo -u postgres createdb -O nombreProyecto nombreProyecto
+
+Modificar o crear el archivo .env:
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=nombreProyecto
+DB_PASSWORD=nombreProyecto
+DB_USERNAME=nombreProyecto
+
+Instalacion de Laravel Breeze:
+composer require laravel/breeze --dev
+php artisan breeze:install
+php artisan migrate
+npm install
+
+Arrancar el servidor:
+composer run dev
+
+EMPEZAR CLONANDO UN REPOSITORIO
+
+gh repo clone schuman94/nombreProyecto
+cd nombreProyecto
+composer install
+npm install
+Cambiar o crear el .env
+Crear usuario y base de datos si no existen
+php artisan migrate:fresh
+php artisan key:generate
+composer run dev
+
+
+COMENZANDO A PROGRAMAR
+
+Creamos un modelo (por ejemplo Empleado) desde la consola:
+php artisan make:model -cmrfs Empleado
+
+Editamos el archivo en database/migrations para que se cree la tabla empleados:
+public function up(): void
+{
+	Schema::create('empleados', function (Blueprint $table) {
+		$table->id();
+		$table->decimal('numero', 4, 0)->unique();
+		$table->foreignId('departamento_id)->constrained();  (poniendo constrained, ya laravel sabe todo, sabe a quien hace referencia esa columna)
+		$table->index('departamento_id');  (Esto se hace para crear un indice en la columna departamento_id, así se busca más rapido, ya que un select * from empleado where departamento_id = X; es algo muy comun)
+	}
+}
+
+Ejecutamos la migracion:
+php artisan migrate
+
+Podemos insertar filas en la tabla desde la consola:
+php artisan db
+INSERT INTO empleados (columna1, columna2, columna3, ...)
+VALUES
+(value1, value2, value3, ...),
+(value1, value2, value3, ...),
+(value1, value2, value3, ...);
+
+Creamos la ruta en routes/web.php:
+Route::resource('empleados', EmpleadoController::class);
+
+En app/Http/Controllers/EmpleadoController.php añadimos la vistas para el CRUD de empleados:
+public function index()
+{
+    return view('empleados.index', [
+        'empleados' => Empleado::with('departamento')->get(),
+    ]);
+}
+
+Otros ejemplos con DepartamentoController:
+
+public function index()
+{
+    return view('departamentos.index', [
+        'departamentos' => Departamento::all(),
+    ]);
+}
+
+public function create()
+{
+    return view('departamentos.create');
+}
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'codigo' => 'required|max:2|unique:departamentos,codigo',
+        'denominacion' => 'required|string|max:255',
+        'localidad' => 'nullable|string|max:255',
+    ]);
+    $departamento = Departamento::create($validated);
+    session()->flash('exito', 'Departamento creado correctamente.');
+    return redirect()->route('departamentos.show', $departamento);
+}
+
+public function show(Departamento $departamento)
+{
+    return view('departamentos.show', [
+        'departamento' => $departamento,
+    ]);
+}
+
+public function edit(Departamento $departamento)
+{
+    return view('departamentos.edit', [
+        'departamento' => $departamento,
+    ]);
+}
+
+public function update(Request $request, Departamento $departamento)
+{
+    $validated = $request->validate([
+        'codigo' => [
+            'required',
+            'max:2',
+            Rule::unique('departamentos')->ignore($departamento),
+        ],
+        'denominacion' => 'required|string|max:255',
+        'localidad' => 'nullable|string|max:255',
+    ]);
+    $departamento->save();
+    session()->flash('exito', 'Departamento modificado correctamente.');
+    return redirect()->route('departamentos.index');
+}
+
+public function destroy(Departamento $departamento)
+{
+    $departamento->delete();
+    return redirect()->route('departamentos.index');
+}
+
+Ahora debemos irnos a resources/views y crear una carpeta para cada modelo, debe llamarse igual que la tabla (minuscula y plural).
+Dentro de cada carpeta creamos los index, create, store, show, edit, update y destroy.blade.php correspondientes a las funciones creadas en el controlador.
+
+En cada uno de estos ficheros blade.php todo el código va dentro de un <x-app-layout> o <x-guest-layout>
+Si utilizamos <x-app-layout> solo podremos acceder si estamos logeados.
+Para resolver esto debemos modificar el resources/views/layouts/navigation.blade.php incluyendo la directiva para tener en cuenta los dos casos (logeado y no logeado):
+@auth
+    ...
+@else
+    ...
+@endauth
+
+Ahora tenemos que editar la clase del modelo en app/Models/Empleado.php
+Creamos las funciones (metodos) correspondientes que relacionen modelos (tablas). Por ejemplo:
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
+    }
+
+Automaticamente se crea una propiedad que se llama igual pero sin los parentesis () y que devuelve un objeto o una coleccion.
+Por ejemplo: Empleado->departamento
+
+Si en vez de la propiedad usamos el metodo, por ejemplo Empleado->departamento(), devuelve un querybuilder al que puedes continuar con un where() o lo que sea.
+
+Reglas en las relaciones:
+En las relaciones 1 a 1, y 1 a muchos, el belongsTo hay que ponerselo al que tenga la clave ajena.
+En las relaciones muchos a muchos, se requiere de una tabla intermedia (tabla pivote).
+La tabla por  convenio se llama como las dos tablas ordenadas alfabeticamente y con un _ en medio.
+Ejemplo: Departamento   articulo_departamento   Articulo
+Las columnas de la tabla pivote son las claves primarias de las otras dos tablas.
+La clave primaria de la tabla intermedia es la union de las dos columnas: departamento_id y articulo_id
