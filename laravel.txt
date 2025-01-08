@@ -406,3 +406,14 @@ funcion util: count() para saber cuantos elementos tiene un array
 con esto obtenemos un id exclusivo que en teoria nunca se va a repetir. Es perfecto por ejemplo para el numero de una factura, en vez de usar un codigo secuencial.
 numero = (string) Str::uuid()
 
+
+
+ENERO 2025
+
+repaso relaciones:  1-1 -> hasOne / belongsTo
+                    1-n -> hasMany / belongsTo
+                    n-n -> belongsToMany / belongsToMany
+
+
+Relaciones poliformicas
+
