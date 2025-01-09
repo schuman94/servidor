@@ -415,5 +415,8 @@ repaso relaciones:  1-1 -> hasOne / belongsTo
                     n-n -> belongsToMany / belongsToMany
 
 
-Relaciones poliformicas
+En el app.php y en el .env podemos cambiar la localizacion del Faker locale
+
+php artisan db:seeder 
+
 
