@@ -420,3 +420,10 @@ En el app.php y en el .env podemos cambiar la localizacion del Faker locale
 php artisan db:seeder 
 
 
+
+Crear nuevo proyecto.
+Estructura kamban
+Dejamos Todo, in progress, done
+
+Nueva issue
+add a title  [RF1] Página principal
