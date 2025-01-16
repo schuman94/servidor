@@ -427,3 +427,9 @@ Dejamos Todo, in progress, done
 
 Nueva issue
 add a title  [RF1] Página principal
+
+
+Paginacion:
+https://laravel.com/docs/11.x/pagination#main-content
+
+Para los middlwware aplicados solo a una vista concreta, mirar el Noticiacontroller de ricardo y el StoreNoticiaRequest.php
