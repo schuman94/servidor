@@ -22,6 +22,7 @@ Crear la base de datos:
 sudo -u postgres createdb -O nombreProyecto nombreProyecto
 
 Modificar o crear el archivo .env:
+APP_FAKER_LOCALE=es_ES
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
@@ -34,6 +35,20 @@ composer require laravel/breeze --dev
 php artisan breeze:install
 php artisan migrate
 npm install
+
+Instalacion de Tailwind (El Breeze ya instala el Tailwind, pero por si acaso lo instalamos y configuramos)
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+Configurar el fichero tailwind.config.js  //Luego lo vamos a volver a modificar
+En /resources/css/app.css añadir directivas:   //por defecto vienen puestas
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+Instalacion de Flowbite:
+npm install -D flowbite
+Modificar el fichero tailwind.config.js
+En /resources/js/app.js hay que añadir: import 'flowbite';
 
 Arrancar el servidor:
 composer run dev
@@ -182,3 +197,85 @@ La tabla por  convenio se llama como las dos tablas ordenadas alfabeticamente y 
 Ejemplo: Departamento   articulo_departamento   Articulo
 Las columnas de la tabla pivote son las claves primarias de las otras dos tablas.
 La clave primaria de la tabla intermedia es la union de las dos columnas: departamento_id y articulo_id
+
+
+Para un modelo cuyo plural no es regular:
+En la consola: php artisan make:model Proyeccion
+Corregir con el plural el nombre del archivo de migracion database/migrations/2024_12_08_104912_create_proyecciones_table.php
+Dentro de ese archivo cambiar el nombre de la tabla proyeccions por proyecciones en up() y down()
+En web.php añadir la ruta para proyecciones indicandolo en parameters:
+    Route::resource('proyecciones', ProyeccionController::class)->parameters([
+        'proyecciones' => 'proyeccion',
+    ]);;
+En el controlador escribir 'proyecciones'
+En el modelo especificar el nombre de la tabla:
+     protected $table = 'proyecciones';
+Si proyeccion_id fuese clave foranea de otra tabla, habria que indicarlo explícitamente la migracion de dicha tabla:
+    $table->foreignId('proyeccion_id')->constrained('proyecciones');
+
+Además, cuando cuando la clave primaria de la tabla no se llama tablasingular_id:
+En el modelo hay que indicar como se llama la clave foranea de la otra tabla con la que se relaciona:
+    public function notas() {
+        return $this->hasMany(Nota::class, 'ccee_id');
+    }
+
+En otros modelos que se relacionen con el anterior, si tambien hay que crear una funcion de relacion como hasMany, hay que indicar no solo Modelo::class, sino tambien la columna con la clave:
+    public function ce() {
+            return $this->belongsTo(Ce::class, 'ccee_id');
+    }
+
+
+Para una tabla pivote que no corresponde a ningun modelo:
+php artisan make:migration create_articulo_factura_table    (orden alfabetico de los nombres)
+Luego editamos la migracion:
+    Schema::create('articulo_factura', function (Blueprint $table) {
+                $table->foreignId('articulo_id')->constrained();
+                $table->foreignId('factura_id')->constrained();
+                $table->primary(['articulo_id', 'factura_id']);
+                $table->integer('cantidad')->default(1);
+                $table->timestamps();
+    });
+
+Ahora nos vamos a los modelos Articulo y Factura y le creamos a ambos la funcion correspondiente con belongsToMany indicandole también si hay alguna columna extra:
+    public function articulos() {
+            return $this->belongsToMany(Articulo::class)
+                ->withPivot('cantidad');
+        }
+
+Para aplicar la migracion: php artisan migrate    (php artisan migrate:rollback para ir hacia atras si nos equivocamos y queremos modificar la migracion)
+
+
+Para acceder a la columna pivote hay que pasar de una tabla a otra y luego a la pivote:
+foreach ($factura->articulos as $articulo)
+    {{ $articulo->pivot->cantidad }}
+
+En el modelo Factura hay una funcion calcular_precio() más elaborada que trabaja con las tablas articulo y articulo_factura
+
+En las rutas, podemos meter el controlador de factura dentro del grupo que lleva el middleware de auth para que solo puedan acceder los logeados.
+Además, en el controlador de factura podriamos hacer que solo se obtengan en el index las facturas de user logeado:
+    public function index()
+    {
+        return view('facturas.index', [
+            'facturas' => Factura::where('user_id', Auth::id())->get(),
+        ]);
+    }
+
+Para usar el Auth::id() es necesario cargar: use Illuminate\Support\Facades\Auth;
+En el show podriamos hacer que solo entre quien es usuario de esa factura concreta y si no, que le salga un 404:
+    public function show(Factura $factura)
+    {
+        // Verificar si el usuario autenticado es el propietario de la factura
+        if ($factura->user_id !== Auth::id()) {
+            abort(404);
+        }
+
+        return view('facturas.show', [
+            'factura' => $factura,
+        ]);
+    }
+
+Para crear una ruta diferente:
+Route::put('prestamos/devolver/{prestamo}', [PrestamoController::class, 'devolver'])->name('prestamos.devolver');
+Route::put('videojuegos/adquirir/{videojuego}', [VideojuegoController::class, 'adquirir'])->name('videojuegos.adquirir');
+Route::get('alumnos/criterios/{alumno}', [AlumnoController::class, 'criterios'])->name('alumnos.criterios');
+Además, hay que crear la funcion en el controlador, y un archivo de vista en el caso de alumnos
