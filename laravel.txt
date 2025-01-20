@@ -459,3 +459,4 @@ En la migracion incluimos en el up: $table->softDeletes()
 Y en el down: $table->dropSoftDeletes();
 php artisan migrate
 Luego hay que utilizar el destroy del borrador. En circunstancias normales el metodo delete eliminaba la fila, ahora la borra "suavemente".
+Esto solo sirve si es eloquent quien consulta la tabla. Como accedas manualmente no. Aunque hay metodos para decirle al eloquent que se traiga los que estan borrados.
