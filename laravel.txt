@@ -417,6 +417,8 @@ repaso relaciones:  1-1 -> hasOne / belongsTo
 
 En el app.php y en el .env podemos cambiar la localizacion del Faker locale
 
+Seeders y factorias
+
 php artisan db:seeder 
 
 
@@ -433,3 +435,27 @@ Paginacion:
 https://laravel.com/docs/11.x/pagination#main-content
 
 Para los middlwware aplicados solo a una vista concreta, mirar el Noticiacontroller de ricardo y el StoreNoticiaRequest.php
+
+Recordar como usar props para los componentes, como el componente de noticia en agitame25
+
+Estudiar los form request para poner en ellos las rules de validate en vez de en el controlador (StoreNoticiaRequest y UpdateNoticiaRequest)
+
+Authorization (gates) Mirar documentacion
+mirar en la noticia.blade.php como se ha usado un @can o @cannot para aplicar el "Gate:allows"
+
+Las autoriuzaciones en el controller se pueden poner a mano, o puedes omitirlo y meterlo en las formRequest al igual que las rules de validated
+
+
+Authorization (policies)
+en las politicas cuando usemos el can tenemos que indicar update en vez de update-noticia. basicamente indicar bien el nombre
+cuidado que ricardo ha modificado las cosas de gates para meter las politicas
+
+
+Soft Deleting
+en el modelo hay que poner un: use SoftDeletes;
+La tabla debe tener una columna llamada deleted_at. Para ello...
+creamos migracion que modifique tabla: make:migration --table=noticias add_noticias_deleted_at_column
+En la migracion incluimos en el up: $table->softDeletes()
+Y en el down: $table->dropSoftDeletes();
+php artisan migrate
+Luego hay que utilizar el destroy del borrador. En circunstancias normales el metodo delete eliminaba la fila, ahora la borra "suavemente".

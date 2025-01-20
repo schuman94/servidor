@@ -6,3 +6,9 @@ git config --global user.email "sergio.chulian@iesdonana.org"
 sudo apt install gh
 git auth login
 
+
+
+
+
+
+git remote prune origin  (elimina todos los punteros locales a ramas remotas que ya no existen)
