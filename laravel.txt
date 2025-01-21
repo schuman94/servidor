@@ -460,3 +460,18 @@ Y en el down: $table->dropSoftDeletes();
 php artisan migrate
 Luego hay que utilizar el destroy del borrador. En circunstancias normales el metodo delete eliminaba la fila, ahora la borra "suavemente".
 Esto solo sirve si es eloquent quien consulta la tabla. Como accedas manualmente no. Aunque hay metodos para decirle al eloquent que se traiga los que estan borrados.
+
+SUBIDA de archivos (file): consultar el noticia create
+enctype="multipart/form-data" tiene que estar en el html
+El archivo filesystem.php es la configuracion de donde se guardan los archivos. Hay que elegir public (publico), ya que local es privado.
+Ademas en el .env está puesto como LOCAL para indicar que las cosas se guardan en el pc
+php artisan storage:link  -> crea un enlace simbolico para que las cosas de storage/app/public esten disponibles desde app/public (solo hay que hacerlo una vez en el proyecto)
+Nos creamos una carpeta imagenes dentro de storage/app/public/
+Consultar el store del controller:
+$archivo->storeAs('imagenes', 'nombreArchivo.jpg', 'public);
+Pero para acceder desde el exterior, accedemos desde public/storage/imagenes
+En el modelo puedes crear una funcion getRutaImagen que genere la ruta de la imagen con el asset para asi no almacenar la ruta de la imagen en la tabla y evitar que te hagan hotlinking
+Se puede crear directorios directamente desde php en donde guardar los ficheros.
+En el validate tenemos los tipos file y image 
+Con la libreria imagine de php puedes hacer cosas con las imagenes, como crear miniaturas y demas
+
