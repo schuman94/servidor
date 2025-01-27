@@ -475,3 +475,5 @@ Se puede crear directorios directamente desde php en donde guardar los ficheros.
 En el validate tenemos los tipos file y image 
 Con la libreria imagine de php puedes hacer cosas con las imagenes, como crear miniaturas y demas
 
+Tests
+php artisan test
