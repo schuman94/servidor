@@ -475,5 +475,15 @@ Se puede crear directorios directamente desde php en donde guardar los ficheros.
 En el validate tenemos los tipos file y image 
 Con la libreria imagine de php puedes hacer cosas con las imagenes, como crear miniaturas y demas
 
-Tests
+Pruebas funcionales (pruebas feature)
 php artisan test
+
+
+No CAE
+Pruebas de aceptacion (de navegador) con DUSK:
+Puede faltar el paquete: sudo apt install php-zip php-curl
+composer require laravel/dusk --dev
+php artisan dusk:install
+Next, set the APP_URL environment variable in your application's .env file. This value should match the URL you use to access your application in a browser.
+para ejecutar las pruebas: php artisan dusk
+
