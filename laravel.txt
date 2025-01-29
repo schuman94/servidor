@@ -1,4 +1,4 @@
-Ctrl + p   es el buscador de archivos de code 
+Ctrl + p   es el buscador de archivos de code
 
 
 Antes de instalar laravel: sudo apt install php-xml php-sqlite3
@@ -12,7 +12,7 @@ Arrancar el servidor: php artisan serve
 Dentro del proyecto: npm install
 npm run build  (construye los assets adecuados)
 
-El comando "composer run dev" es la combinacion del "php artisan serve" + "npm run dev" 
+El comando "composer run dev" es la combinacion del "php artisan serve" + "npm run dev"
 
 php artisan tinker es el psyshell que tiene laravel
 
@@ -72,7 +72,7 @@ php artisan migrate:status  y me dirá que migration table not found. Es normal,
 php artisan migrate     esto me crea la tabla de migraciones y aplica todas las migraciones
 
 Comando para abrir la consola de la base de datos con el php artisan:
-php artisan db 
+php artisan db
 
 
 
@@ -107,7 +107,7 @@ y ahora nos vamos a la migracion que se ha creado en: /database/migrations/2024_
 Aqui añadimos las columnas de departamento.
 
 Luego ejecutamos un: php artisan migrate
-Y ya se corre la migracion para crear la tabla en la base de datos. 
+Y ya se corre la migracion para crear la tabla en la base de datos.
 
 
 
@@ -162,8 +162,8 @@ Con eloquent tenemos objetos a los que se les puede aplicar metodos como all, fi
 _________________________________________________________________________________.
 Cuando me clono de 0 un repositorio tengo que hacer esto:                        |
 composer install                                                                 |
-npm install                                                                      | 
-cambiar o crear el .env                                                          | 
+npm install                                                                      |
+cambiar o crear el .env                                                          |
 php artisan migrate   (puedes asegurarte poniendo un php artisan migrate:fresh   |
                        para limpiar todo antes en la base de datos)              |
 php artisan key:generate                                                         |
@@ -220,7 +220,7 @@ Si en vez de la propiedad usamos el metodo, devuelve un querybuilder al que pued
 
 
 public function departamento() {
-	return $this->belongsTo(Departamento::class); 
+	return $this->belongsTo(Departamento::class);
 }
 
 
@@ -264,7 +264,7 @@ departamento_id y articulo_id
 
 
 Vamos a crear primero el articulo:
-php artisan make:model -cmrfs Articulo 
+php artisan make:model -cmrfs Articulo
 
 Va a tener una columna "precio" de tipo decimal (no numeric)
 
@@ -321,8 +321,8 @@ x-app-layout va asociado con layouts/app.blade.php
 Parece que lo que siempre se renderiza es el app.blade.php metiendole el contenido de nuestro otro archivo en el slot
 
 
-Esto por ahora no va a ocurrir, pero si alguna vez se renderizase un archivo llamado layouts/pepe.blade.php 
-Yo podria tener un archivo en donde tenga todo dentro de un x-pepe-layout 
+Esto por ahora no va a ocurrir, pero si alguna vez se renderizase un archivo llamado layouts/pepe.blade.php
+Yo podria tener un archivo en donde tenga todo dentro de un x-pepe-layout
 Y todo eso iria al {{ $slot }} de otro archivo layouts/pepe.blade.php que he creado
 
 
@@ -330,7 +330,7 @@ Y todo eso iria al {{ $slot }} de otro archivo layouts/pepe.blade.php que he cre
 En resources/views/layouts/app.blade.php hay en alguna parte del codigo un {{ $header}}
 Eso significa que ahí aparecerá el mismo contenido que se encuentra en el archivo resources/views/departamentos/index.blade.php dentro de:
 <x-slot name="header">
-    //        
+    //
 </x-slot>
 Esto ocurre porque le hemos puesto un name="header"
 
@@ -407,22 +407,146 @@ con esto obtenemos un id exclusivo que en teoria nunca se va a repetir. Es perfe
 numero = (string) Str::uuid()
 
 
-
-ENERO 2025
-
 repaso relaciones:  1-1 -> hasOne / belongsTo
                     1-n -> hasMany / belongsTo
                     n-n -> belongsToMany / belongsToMany
 
+ENERO 2025
 
-En el app.php y en el .env podemos cambiar la localizacion del Faker locale
+----------------RELACIONES POLIMORFICAS: UNO A MUCHOS-------------------------------------------------
 
-Seeders y factorias
+Ejemplo:
+Un dispositivo puede pertenecer a un ordenador o a un aula.
+El dispositivo es quien tiene la clave ajena que puede apuntar a un ordenador o un aula.
+Un ordenador puede tener muchos dispositivos y un aula puede tener muchos dispositivos.
+Consideramos tanto al ordenador como al aula con un nombre que nos inventamos. Por ejemplo, "colocable".
+De forma que un dispositivo pertenece a un colocable. Y un colocable puede tener muchos dispositivos.
+Nos encontramos ante una relación de 1 a muchos pero polimorfica.
 
-php artisan db:seeder 
+Primero es necesario crear las migraciones de los dos tipos de colocables: aula y ordenador. Se crean como siempre, no hay nada nuevo.
+Luego creamos la migración de dispositivos, en donde se añade: $table->morphs('colocable');
+Esto crea dos columnas en la tabla: colocable_id y colocable_type
+
+Para cada fila:
+colocable_type contiene la clase a la que pertenece el colocable: App\Models\Ordenador o App\Models\Aula
+colocable_id contiene la clave ajena, es decir, el id de la tabla ordenadores o aulas.
+
+En la clase Dispositivo hay que añadir el método equivalente al belongsTo:
+    public function colocable() {
+        return $this->morphTo();
+    }
+
+En las clases Aula y Ordenador hay que añadir el método equivalente al hasMany:
+    public function dispositivos() {
+        return $this->morphMany(Dispositivo::class, 'colocable');
+    }
+
+En el store y el update del controlador de Dispositivo será necesario implementar la creación o modificación de las columnas colocable_id y colocable_type
+(Ver ejemplo en el proyecto schuman94/ordenadores)
 
 
+-----------------RELACIONES POLIMORFICAS UNO A UNO-------------------------------------
 
+Suponiendo que un colocable solo puede tener un dispositivo...
+Es igual que la uno a muchos, pero en los "colocables" hay que añadir el método:
+
+    public function dispositivos() {
+        return $this->morphOne(Dispositivo::class, 'colocable');
+    }
+
+----------------RELACIONES POLIMORFICAS MUCHOS A MUCHOS---------------------------------
+
+Supongiendo que posts y videos pueden tener tags...
+
+Aquí hay que crear una tabla intermedia llamada taggeables
+En esa tabla hay que incluir un foreignId de tags y el morphs():
+    $table->foreignId('tag_id')->constrained();
+    $table->morphs('taggable');
+
+Dentro del modelo Post o Video, el metodo tags() usa morphToMany:
+    public function tags():
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+Dentro del modelo Tag no tenemos un metodo taggeable que devuelva todo, sino un método para cada tipo de taggeable:
+    public function posts():
+    {
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+    public function videos():
+    {
+        return $this->morphedByMany(Video::class, 'taggable');
+    }
+
+
+----------------FACTORIES Y SEEDERS ----------------------------------------------------
+
+En DispositivoFactory.php creamos la factoria usando fake. Ejemplo:
+
+return [
+    'codigo' => fake()->unique()->bothify('DISP-??-####'),
+    'nombre' => fake()->word(),
+    'colocable_id' => rand(1, 5),
+    'colocable_type' => fake()->randomElement([
+        'App\Models\Ordenador',
+        'App\Models\Aula'
+    ]),
+];
+
+
+Luego nos vamos a Dispositivo.Seeder.php y creamos la seed. Ejemplo:
+
+public function run(): void
+{
+    Dispositivo::factory()->count(20)->create();
+}
+
+Tambien se puede crear algo manual sin necesidad de factorias. Importante el use Illuminate\Support\Facades\DB; Ejemplo:
+
+public function run(): void
+{
+    DB::table('aulas')->insert([
+        'codigo' => 'IF0',
+        'nombre' => 'Informática',
+    ]);
+}
+
+Nos vamos a DatabaseSeeder.php y indicamos el orden de todos los seeders. Ejemplo:
+
+public function run(): void
+{
+    $this->call([
+        AulaSeeder::class,
+        OrdenadorSeeder::class,
+        DispositivoSeeder::class,
+    ]);
+}
+
+Por ultimo, ejecutamos: php artisan db:seed
+Si queremos reiniciar todo, mejor esto: php artisan migrate:fresh --seed
+
+Podemos cambiar a español el fake. Para ello:
+En app.php cambiamos esta linea: 'faker_locale' => env('APP_FAKER_LOCALE', 'es_ES'),
+En .env cambiamos esta linea: APP_FAKER_LOCALE=es_ES
+
+-------------------------------PAGINACION------------------------------------------------
+
+Cuando retornemos una vista desde web.php o un controlador:
+
+    return view('ordenadores.index', [
+        'ordenadores' => Ordenador::paginate(10),
+    ]);
+
+
+En la vista blade tenemos que añadir abajo:
+
+    <div class="mt-4">
+        {{ $ordenadores->links() }}
+    </div>
+
+-------------------------------------------------------------------------------------
 Crear nuevo proyecto.
 Estructura kamban
 Dejamos Todo, in progress, done
@@ -472,7 +596,7 @@ $archivo->storeAs('imagenes', 'nombreArchivo.jpg', 'public);
 Pero para acceder desde el exterior, accedemos desde public/storage/imagenes
 En el modelo puedes crear una funcion getRutaImagen que genere la ruta de la imagen con el asset para asi no almacenar la ruta de la imagen en la tabla y evitar que te hagan hotlinking
 Se puede crear directorios directamente desde php en donde guardar los ficheros.
-En el validate tenemos los tipos file y image 
+En el validate tenemos los tipos file y image
 Con la libreria imagine de php puedes hacer cosas con las imagenes, como crear miniaturas y demas
 
 Pruebas funcionales (pruebas feature)
@@ -486,4 +610,3 @@ composer require laravel/dusk --dev
 php artisan dusk:install
 Next, set the APP_URL environment variable in your application's .env file. This value should match the URL you use to access your application in a browser.
 para ejecutar las pruebas: php artisan dusk
-
