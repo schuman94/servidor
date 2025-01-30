@@ -495,6 +495,7 @@ return [
     ]),
 ];
 
+Para obtener un id aleatorio disponiblede una clave ajena podemos usar Aula::all()->suffle()-first()->id (en el caso de colocable no porque colocable no es un modelo)
 
 Luego nos vamos a Dispositivo.Seeder.php y creamos la seed. Ejemplo:
 
@@ -601,7 +602,8 @@ Con la libreria imagine de php puedes hacer cosas con las imagenes, como crear m
 
 Pruebas funcionales (pruebas feature)
 php artisan test
-
+hay que crear un .env.testing y cambiar APP_ENV=testing y modificar la base de datos, y crear una base de datos distinta (el usuario no, solo la base de datos). Con esto no perdemos los datos al ejecutar las pruebas.
+php artisan test --env=testing (esto no hace falta si ya existe el env.testing)
 
 No CAE
 Pruebas de aceptacion (de navegador) con DUSK:
