@@ -424,7 +424,8 @@ De forma que un dispositivo pertenece a un colocable. Y un colocable puede tener
 Nos encontramos ante una relación de 1 a muchos pero polimorfica.
 
 Primero es necesario crear las migraciones de los dos tipos de colocables: aula y ordenador. Se crean como siempre, no hay nada nuevo.
-Luego creamos la migración de dispositivos, en donde se añade: $table->morphs('colocable');
+Luego creamos la migración de dispositivos, en donde se añade: 
+    $table->morphs('colocable');
 Esto crea dos columnas en la tabla: colocable_id y colocable_type
 
 Para cada fila:
