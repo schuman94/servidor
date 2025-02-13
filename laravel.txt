@@ -613,3 +613,42 @@ composer require laravel/dusk --dev
 php artisan dusk:install
 Next, set the APP_URL environment variable in your application's .env file. This value should match the URL you use to access your application in a browser.
 para ejecutar las pruebas: php artisan dusk
+
+
+LIVEWIRE
+composer create project laravel/laravel livewire25
+
+php aritsan breeze:install    y elegimos Livewire  Volt noseké si queremos que la auntenticacion y todo eso tambien sea con livewire
+
+CORREO
+En el archivo mail.php tenemos el apartado del smtp
+Descargarse el mailpit si queremos probarlo en local
+
+https://mailpit.axllent.org/docs/install/
+sudo bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
+
+Se arranca.
+Lueg se configuran los parametros del .env
+
+
+MAIL_MAILER=smtp
+MAIL_SCHEME=null
+MAIL_HOST=127.0.0.1 o smtp.gamil.com 
+MAIL_PORT=1025 o 465 para google
+MAIL_USERNAME=agitame o la direccion del gmail
+MAIL_PASSWORD=agitame o el token de la cuenta de google y además un MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS"agitame@agitame.com"
+MAIL_FROM_NAME= lo que viene por defecto
+
+php artisan make:mail SuperadoUmbral   
+Tambien se puede hacer con markdown:
+php artisan make:mail SuperadoUmbralMd --markdown=emails.superado-umbral-md  (La carpeta mails creo que hay que crearla antes)
+
+Se genera el SuperadoUmbral.php
+
+Tambien hay que crear una vista en views/emails/
+
+Para obtener un token de la cuenta de google tienes que ir a myaccounr y activar verificacion en dos pasos y luego crear contraseña de aplicación.
+
+daisyUI es un "bootstrap pero de tailwind" es util tenerlo en cuenta. Es un codigo mucho más corto que tailwind. Tambien echar un vistazo al maryUI, el cual usa livewire. Aqui hay una cosa que quizas es util par añadir participantes extra del sorteo.
+
