@@ -652,3 +652,6 @@ Para obtener un token de la cuenta de google tienes que ir a myaccounr y activar
 
 daisyUI es un "bootstrap pero de tailwind" es util tenerlo en cuenta. Es un codigo mucho más corto que tailwind. Tambien echar un vistazo al maryUI, el cual usa livewire. Aqui hay una cosa que quizas es util par añadir participantes extra del sorteo.
 
+
+En un entorno de produccion, cuando te traigas el proyecto, tendrias que hacer un: composer install --no-dev para que no se instalen las dependencias de desarrollo.
+
