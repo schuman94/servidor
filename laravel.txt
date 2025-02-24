@@ -601,7 +601,7 @@ Se puede crear directorios directamente desde php en donde guardar los ficheros.
 En el validate tenemos los tipos file y image
 Con la libreria imagine de php puedes hacer cosas con las imagenes, como crear miniaturas y demas
 
-Pruebas funcionales (pruebas feature)
+Pruebas funcionales (pruebas feature): php artisan make:test VideojuegoTest
 php artisan test
 hay que crear un .env.testing y cambiar APP_ENV=testing y modificar la base de datos, y crear una base de datos distinta (el usuario no, solo la base de datos). Con esto no perdemos los datos al ejecutar las pruebas.
 php artisan test --env=testing (esto no hace falta si ya existe el env.testing)
